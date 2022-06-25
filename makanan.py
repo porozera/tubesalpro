@@ -4,6 +4,8 @@ from random import *
 from tkinter import messagebox
 import time
 
+from setuptools import Command
+
 food_answer = ['BATAGOR','BUBUR','PIZZA','ROTI','SATE','BAKSO','MARTABAK','OMELETE','SEBLAK',
             'CIMOL','CIRENG','NASTAR','KASTENGEL','BAKWAN','TEMPE','TAHU','STEAK','RAMEN','BASRENG',
             'KEBAB','SUSHI','SIOMAY','BURGER','SOTO','BIHUN','RENDANG','PANGSIT','MAKARONI','PECEL',
@@ -33,21 +35,22 @@ def main():
         word.configure(text=food_word[ran_num])
         get_input.delete(0, END)
         ans_lab.configure(text="")
-    
+
     def check():
         global points, ran_num
         user_word = get_input.get().upper()
+        
         try:
-            if user_word == food_answer[ran_num]:
+            while user_word != food_answer[ran_num]:
+                raise ValueError
+            else:
                 points += 5
                 score.configure(text="Score: " + str(points))
-                messagebox.showinfo('Benar', "Jawaban Anda Benar!")
                 ran_num = randrange(0,(len(food_word)))
                 word.configure(text=food_word[ran_num])
                 get_input.delete(0,END)
                 ans_lab.configure(text="")
-            else:
-                raise ValueError
+                messagebox.showinfo('Benar', "Jawaban Anda Benar!")
         except ValueError:
             messagebox.showerror("Salah","Jawaban Anda Salah")
             get_input.delete(0,END)
@@ -61,6 +64,8 @@ def main():
             ans_lab.configure(text=food_answer[ran_num])
         else:
             ans_lab.configure(text="Point anda tidak cukup")
+
+
 
     my_window = Tk()
     my_window.geometry("500x500")
@@ -78,6 +83,7 @@ def main():
         command=back,
     )
     lab_img1.pack(anchor='nw', pady=10, padx=10)
+
 
     score = Label(
         text= "Score:- 0",
@@ -145,5 +151,5 @@ def main():
     )
     ans_lab.pack()
 
-    my_window.mainloop()
 
+    my_window.mainloop()
