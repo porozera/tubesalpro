@@ -32,21 +32,22 @@ def main():
         word.configure(text=things_word[ran_num])
         get_input.delete(0, END)
         ans_lab.configure(text="")
-    
+
     def check():
         global points, ran_num
         user_word = get_input.get().upper()
+        
         try:
-            if user_word == things_answer[ran_num]:
+            while user_word != things_answer[ran_num]:
+                raise ValueError
+            else:
                 points += 5
                 score.configure(text="Score: " + str(points))
-                messagebox.showinfo('Benar', "Jawaban Anda Benar!")
                 ran_num = randrange(0,(len(things_word)))
                 word.configure(text=things_word[ran_num])
                 get_input.delete(0,END)
                 ans_lab.configure(text="")
-            else:
-                raise ValueError
+                messagebox.showinfo('Benar', "Jawaban Anda Benar!")
         except ValueError:
             messagebox.showerror("Salah","Jawaban Anda Salah")
             get_input.delete(0,END)
@@ -62,7 +63,7 @@ def main():
             ans_lab.configure(text="Point anda tidak cukup")
 
     my_window = Tk()
-    my_window.geometry("500x500")
+    my_window.geometry("600x500")
     my_window.resizable(0,0)
     my_window.title("Game Tebak Kata")
     my_window.configure(background="#C0C0C0")
